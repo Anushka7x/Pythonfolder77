@@ -1,0 +1,49 @@
+import random
+import math
+print ("______________________WELCOME______________________")
+print ("________________________TO______________________")
+print ("__________________GUESS THE NUMBER______________________")
+print ("INSTRUCTION")
+print ("-You will be given 05 chances to guess the correct number")
+print ("-For correct guess you will earn 1 point and lose for wrong guess")
+print ("-Your maximum score in this game will be SCORE:05")
+print ("-Your minimum score in this game will be SCORE:00")
+print ("-Press ENTER to begin with the game")
+print ()
+print ()
+print ("Give the upper/lower bound")
+print () 
+low_bound = int(input("Enter Lower Bound ="))
+print ()
+upp_bound = int(input("Enter Upper Bound ="))
+new_number = random.randint(low_bound,upp_bound)
+gamescore = 5
+i=1
+while i<=5:
+    print()
+    guessednum = int(input("Enter your number between " + str(low_bound)+ "&" + str(upp_bound)+ "="))
+    i=i+1
+    if guessednum == new_number:
+        print()
+        print("YOU WON THE GAME")
+        print("YEAH!! THE NUMBER YOU HAVE GUESSED IS CORRECT :-))")
+        print("YOUR TOTAL SCORE IS :"+str(gamescore)+ ":-)))")
+        break
+    elif(guessednum > new_number):
+        print()
+        print("THE IS NUMBER YOU HAVE GUESS IS GREATER THEN THE NEW NUMBER :-(")
+        gamescore=gamescore-1
+        print("ATTEMPT AGAIN FOR THE NUMBER :-((")
+        
+    elif(guessednum<new_number):
+        print()
+        print("THE NUMBER YOU HAVE GUESSED IS LESS THAN NEW NUMBER :-((")
+        gamescore=gamescore-1
+        print("ATTEMPT AGAIN FOR THE NUMBER :-((")
+if(gamescore==0):
+    print()
+    print("______________________ATTEMPT LIMITS ARE EXCEED YOU LOSE!!______________________ !!")
+    
+    gamescore=gamescore-1
+    print("______________________TOTAL SCORE :"+str(gamescore)+"______________________")
+    
