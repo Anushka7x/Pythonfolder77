@@ -1,0 +1,55 @@
+import pygame 
+import tkinter as tk
+from pygame import mixer
+from tkinter import*
+import os
+
+def playsong():
+    currentsong=playlist.get(ACTIVE)
+    print(currentsong)
+    mixer.music.load(currentsong)
+    songstatus.set('playing')
+    mixer.music.play()
+
+def pausesong():
+    songstatus.set('paused')
+    mixer.music.pause()
+
+def stopsong():
+    songstatus.set('stopped')
+    mixer.music.stop()
+
+def resumesong():
+    songstatus.get('resumming')
+    mixer.music.unpause()
+
+root=tk()
+root.title("music player")
+
+mixer.init()
+songstatus=StringVar()
+songstatus.set('choosing')
+
+playlist=Listbox(root,selectmode=SINGLE,bg='parrot green',fg="lime yellow",width=40,)
+playlist.grid(columnspan=5)
+
+os.chdir(r'C:\Users\anush\OneDrive\Desktop\musicx')
+songs=os.listdir()
+for s in songs:
+    playlist.insert(END,s)
+
+playbtn=Button(root,text='play',command=playsong)
+playbtn.config(bg='parrot green',fg='lime yellow',padx=5,pady=5)
+playbtn.grid(row=1,column=0)
+
+pausebtn=Button(root,text='pause',command=pausesong)
+pausebtn.config(bg='parrot green',fg='lime yellow',padx=5,pady=5)
+pausebtn.grid(row=1,column=1)
+
+resumebtn=Button(root,text='resume',command=resumesong)
+resumebtn.config(bg='parrot green',fg='lime yellow',padx=5,pady=5)
+resumebtn.grid(row=1,column=3)
+
+mainloop()
+
+
