@@ -1,55 +1,61 @@
-import pygame 
+
 import tkinter as tk
-from pygame import mixer
 from tkinter import*
+
+from pytube import YouTube
+from tkinter import filedialog,messagebox
 import os
 
-def playsong():
-    currentsong=playlist.get(ACTIVE)
-    print(currentsong)
-    mixer.music.load(currentsong)
-    songstatus.set('playing')
-    mixer.music.play()
+def widgets():
+    label_yt = Label(root,text="YouTube URL :" , bg="red")
+    label_yt.grid(row=1,column=0,padx=3,pady=3)
 
-def pausesong():
-    songstatus.set('paused')
-    mixer.music.pause()
+    root.text = Entry(root,width=65,textvariable=videolink)
+    root.text.grid(row=1,column=1,padx=10,pady=10)
 
-def stopsong():
-    songstatus.set('stopped')
-    mixer.music.stop()
+    des_label=Label(root,text="Video Path", bg= "Yellow")
+    des_label.grid(row=2,column=0,padx=4,pady=4)
 
-def resumesong():
-    songstatus.get('resumming')
-    mixer.music.unpause()
+    root.des_text= Entry(root, width=50, textvariable=download)
+    root.des_text.grid(row=2,column=1,padx=5,pady=5)
 
-root=tk()
-root.title("music player")
+    browsebutton= Button(root , text="browse", command=browse, width=5,bg="sky blue")
+    browsebutton.grid(row=2,column=2,padx=4,pady=4)
 
-mixer.init()
-songstatus=StringVar()
-songstatus.set('choosing')
+    downloadbutton=Button(root, text="download video", command= downloadvideo , width=35,bg="sky blue")
+    downloadbutton.grid(row=3,column=1,padx=5,pady=5)
+    
 
-playlist=Listbox(root,selectmode=SINGLE,bg='parrot green',fg="lime yellow",width=40,)
-playlist.grid(columnspan=5)
+def browse():
+    directory=filedialog.askdirectory(initialdir="Your directory")
+    download.set(directory)
 
-os.chdir(r'C:\Users\anush\OneDrive\Desktop\musicx')
-songs=os.listdir()
-for s in songs:
-    playlist.insert(END,s)
+def downloadvideo():
+    url= videolink.get()
+    folder= download.get()
+    getvideo = YouTube(url)
+    getstream = getvideo.streams.first()
+    getstream.download(folder)
 
-playbtn=Button(root,text='play',command=playsong)
-playbtn.config(bg='parrot green',fg='lime yellow',padx=5,pady=5)
-playbtn.grid(row=1,column=0)
+    messagebox.showinfo("success","You have downloaded the video " +folder)
 
-pausebtn=Button(root,text='pause',command=pausesong)
-pausebtn.config(bg='parrot green',fg='lime yellow',padx=5,pady=5)
-pausebtn.grid(row=1,column=1)
 
-resumebtn=Button(root,text='resume',command=resumesong)
-resumebtn.config(bg='parrot green',fg='lime yellow',padx=5,pady=5)
-resumebtn.grid(row=1,column=3)
 
-mainloop()
+
+
+root = tk.Tk()
+root.geometry('560x170')
+root.configure(bg='Orange')
+root.resizable(False,False)
+root.title("DownTube")
+
+
+download=StringVar()
+videolink=StringVar()
+
+widgets()
+
+root.mainloop()
+
 
 
